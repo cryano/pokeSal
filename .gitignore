@@ -1,0 +1,28 @@
+# --- Eclipse ---
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.class
+*.jar
+*.war
+*.ear
+*.log
+.sourcepath
+.classpath
+.project
+.settings/
+
+# --- VS Code ---
+.vscode/
+
+# --- C++ / Compiladores ---
+*.out
+*.exe
+*.o
+*.obj
+
+# --- Sistema Operacional ---
+.DS_Store
+Thumbs.db
