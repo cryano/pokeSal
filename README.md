@@ -11,33 +11,29 @@ src/
 ├── main/java/br/com/pokesal/
 │   ├── Main.java                               # Ponto de entrada do Torneio
 │   ├── model/
-│   │   ├── Antidote.java                       # Item de cura de envenenamento
-│   │   ├── AsfaltoQuente.java                  # Terreno de fogo (+15%)
-│   │   ├── CanteiroCentral.java                # Terreno de regeneração (+5 HP)
-│   │   ├── Golpe.java                          # Golpes e movimentos de ataque
-│   │   ├── HeldItem.java                       # Itens segurados passivos
-│   │   ├── ItemDeBatalha.java                  # Classe base de itens consumíveis
-│   │   ├── PocaDeChuva.java                    # Terreno aquático (+15%)
-│   │   ├── Pokesal.java                        # Entidade das criaturas de batalha
-│   │   ├── Potion.java                         # Poção básica (+15 HP)
-│   │   ├── SuperPotion.java                    # Super poção (+25 HP)
-│   │   ├── Terreno.java                        # Classe base de arenas
-│   │   ├── TipoElemental.java                  # Enum elemental (PLANTA, FOGO, AGUA)
-│   │   ├── TipoStatus.java                     # Enum de status (QUEIMADO, etc.)
-│   │   └── Treinador.java                      # Entidade do competidor
+│   │   ├── Antidote.java                       
+│   │   ├── AsfaltoQuente.java                  
+│   │   ├── CanteiroCentral.java                
+│   │   ├── Golpe.java                          
+│   │   ├── HeldItem.java                       
+│   │   ├── ItemDeBatalha.java                  
+│   │   ├── PocaDeChuva.java                    
+│   │   ├── Pokesal.java                        
+│   │   ├── Potion.java                         
+│   │   ├── SuperPotion.java                    
+│   │   ├── Terreno.java                        
+│   │   ├── TipoElemental.java                  
+│   │   ├── TipoStatus.java                     
+│   │   └── Treinador.java                      
 │   └── service/
-│       ├── Batalha.java                        # Máquina de estados do combate
-│       ├── EfeitoDeStatus.java                 # Interface/classe abstrata de status
-│       ├── EfeitoDeStatusGolpe.java            # Status decorrentes de ataques
-│       ├── EfeitoDeStatusHeld.java             # Buffs passivos de itens segurados
-│       ├── EfeitoDeStatusTerreno.java          # Buffs ambientais da arena
-│       ├── LimiteItensExcedidosException.java  # Exceção de limite de itens
-│       └── SimuladorDeBatalha.java             # Catálogo, sorteios e utilitários
+│       ├── Batalha.java                        
+│       ├── EfeitoDeStatus.java                 
+│       ├── EfeitoDeStatusGolpe.java            
+│       ├── EfeitoDeStatusHeld.java             
+│       ├── EfeitoDeStatusTerreno.java          
+│       ├── LimiteItensExcedidosException.java  
+│       └── SimuladorDeBatalha.java             
 └── test/java/br/com/pokesal/
-    ├── GeradorPdf.java                         # Emissor de relatório técnico em PDF
-    ├── TestRunner.java                         # Executor autônomo de testes (100% Java)
-    └── service/
-        └── BatalhaTest.java                    # Suíte oficial de testes unitários JUnit 5
 ```
 
 ---
