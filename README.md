@@ -6,6 +6,7 @@ Projeto acadêmico em Java que implementa o simulador de batalhas Pokémon custo
 ## Apresentação de 10min em vídeo não-listado: 
 
 https://youtu.be/xS65EqgLDBQ
+#### Vale salientar que não foi possível demonstrar o feedback do Google Checkstyle em detalhes devido ao limite de tempo da apresentação. É necessária a rodagem do código sob o checkstyle para verificar os feedbacks da ferramenta. A presença de Javadocs conforme o previsto pelas normas da Google e a configuração da formatação padrão em todas as classes funciona como uma prévia da conformidade com as normas do checkstyle.
 ---
 
 ## Estrutura de Pacotes
