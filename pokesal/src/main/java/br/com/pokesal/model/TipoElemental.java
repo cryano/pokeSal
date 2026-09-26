@@ -36,6 +36,9 @@ public enum TipoElemental {
     if (this == AGUA && alvo == FOGO) {
       return VANTAGEM_MULTIPLICADOR;
     }
+    if (this == AGUA && alvo == PLANTA) {
+      return DESVANTAGEM_MULTIPLICADOR;
+    }
     if (this == PLANTA && alvo == AGUA) {
       return VANTAGEM_MULTIPLICADOR;
     }

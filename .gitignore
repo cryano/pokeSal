@@ -23,6 +23,13 @@ tmp/
 *.o
 *.obj
 
+# --- IntelliJ IDEA ---
+.idea/
+*.iml
+
+# --- Maven ---
+target/
+
 # --- Sistema Operacional ---
 .DS_Store
 Thumbs.db

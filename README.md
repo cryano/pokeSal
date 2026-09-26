@@ -39,6 +39,19 @@ src/
 │       ├── LimiteItensExcedidosException.java  
 │       └── SimuladorDeBatalha.java             
 └── test/java/br/com/pokesal/
+    └── PokeSalTest.java                        # Suite oficial de testes unitarios (JUnit 5)
 ```
 
 ---
+
+## Execução dos Testes e Qualidade (Fase 02)
+
+Para executar a suite completa de testes automatizados com o Maven Surefire:
+```bash
+mvn test
+```
+
+Para executar a auditoria de conformidade com as normas do Google Checkstyle:
+```bash
+mvn checkstyle:check
+```
