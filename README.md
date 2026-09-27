@@ -55,3 +55,4 @@ Para executar a auditoria de conformidade com as normas do Google Checkstyle:
 ```bash
 mvn checkstyle:check
 ```
+#### É essencial acessar /docs, onde todos os relatórios e documentações sobre o funcionamento do projeto e seus testes estão inseridas. 
