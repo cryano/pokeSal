@@ -74,6 +74,48 @@ public class SimuladorDeBatalha {
   }
 
   /**
+   * Permite ao treinador escolher formalmente seu Pokesal inicial entre as 6 opcoes oficiais.
+   * Atende estritamente a Regra 1 de Negocio do sistema.
+   *
+   * @param treinador competidor que recebera a criatura escolhida.
+   * @param nomePokesal nome da especie selecionada.
+   * @throws IllegalArgumentException se o nome informado nao corresponder aos iniciais permitidos.
+   */
+  public void escolherPokesal(Treinador treinador, String nomePokesal) {
+    if (treinador == null || nomePokesal == null) {
+      throw new IllegalArgumentException("Treinador e nome do Pokesal nao podem ser nulos.");
+    }
+    List<Pokesal> catalogo = obterCatalogoPokesal();
+    Pokesal selecionado = catalogo.stream()
+        .filter(p -> p.getNome().equalsIgnoreCase(nomePokesal.trim()))
+        .findFirst()
+        .orElseThrow(() -> new IllegalArgumentException(
+            "Pokesal invalido: '" + nomePokesal + "'. Opcoes permitidas: BulbaSal, CharSal, "
+                + "SquirtSal, ChikoSal, CyndaSal ou TotoSal."));
+
+    treinador.setPokesal(clonarPokesal(selecionado));
+    associarItensMochila(treinador);
+  }
+
+  /**
+   * Permite ao treinador escolher seu Pokesal inicial pelo indice numerico do catalogo (1 a 6).
+   *
+   * @param treinador competidor que recebera a criatura escolhida.
+   * @param indiceOpcao indice baseado em 1 (1 para a primeira opcao ate 6).
+   * @throws IllegalArgumentException se o indice estiver fora da faixa 1..6.
+   */
+  public void escolherPokesal(Treinador treinador, int indiceOpcao) {
+    List<Pokesal> catalogo = obterCatalogoPokesal();
+    if (indiceOpcao < 1 || indiceOpcao > catalogo.size()) {
+      throw new IllegalArgumentException(
+          "Indice de Pokesal invalido. Escolha entre 1 e " + catalogo.size());
+    }
+    Pokesal selecionado = catalogo.get(indiceOpcao - 1);
+    treinador.setPokesal(clonarPokesal(selecionado));
+    associarItensMochila(treinador);
+  }
+
+  /**
    * Sorteia um Pokesal do catalogo oficial e o associa ao competidor por clonagem profunda.
    *
    * @param treinador competidor que recebera a criatura.

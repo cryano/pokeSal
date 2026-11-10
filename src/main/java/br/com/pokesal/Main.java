@@ -6,13 +6,16 @@ import br.com.pokesal.model.CanteiroCentral;
 import br.com.pokesal.model.Golpe;
 import br.com.pokesal.model.ItemDeBatalha;
 import br.com.pokesal.model.PocaDeChuva;
+import br.com.pokesal.model.Pokesal;
 import br.com.pokesal.model.Potion;
 import br.com.pokesal.model.SuperPotion;
 import br.com.pokesal.model.Terreno;
 import br.com.pokesal.model.Treinador;
 import br.com.pokesal.service.Batalha;
 import br.com.pokesal.service.SimuladorDeBatalha;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Ponto de entrada do sistema e condutor do fluxo do Torneio Oficial UCSAL.
@@ -58,8 +61,12 @@ public class Main {
     Treinador t1 = simulador.getTreinadores().get(INDICE_PRIMEIRO_TREINADOR);
     Treinador t2 = simulador.getTreinadores().get(INDICE_SEGUNDO_TREINADOR);
 
-    simulador.sortearPokesal(t1);
+    Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8.name());
+    interagirEscolhaInicial(simulador, t1, scanner);
+
     simulador.sortearPokesal(t2);
+    System.out.printf("-> %s definiu seu inicial: %s!%n",
+        t2.getNome(), t2.getPokesal().getNome());
 
     simulador.sortearHeldItem(t1);
     simulador.sortearHeldItem(t2);
@@ -89,26 +96,29 @@ public class Main {
     executarCicloBatalha(batalha1, t1, t2);
 
     System.out.println("\n====================================================");
+    Treinador finalista;
     if (batalha1.getVencedor() == t1) {
       t1.incrementarBatalhasVencidas();
       System.out.printf(" VENCEDOR DA 1a BATALHA: %s (%s)!%n",
           t1.getNome(), t1.getPokesal().getNome());
       System.out.printf(" %s avanca para a Grande Final!%n", t1.getNome());
-      System.out.println("====================================================");
+      finalista = t1;
+    } else if (batalha1.getVencedor() == t2) {
+      t2.incrementarBatalhasVencidas();
+      System.out.printf(" VENCEDOR DA 1a BATALHA: %s (%s)!%n",
+          t2.getNome(), t2.getPokesal().getNome());
+      System.out.printf(" %s avanca para a Grande Final!%n", t2.getNome());
+      finalista = t2;
     } else {
-      if (batalha1.getVencedor() != null) {
-        System.out.printf(" %s FOI DERROTADO POR %s!%n",
-            t1.getNome(), batalha1.getVencedor().getNome());
-      } else {
-        System.out.printf(" A BATALHA TERMINOU EM EMPATE! %s foi eliminado!%n",
-            t1.getNome());
-      }
-      System.out.println("====================================================");
-      return;
+      System.out.println(" A BATALHA TERMINOU EM EMPATE! Desempate por iniciativa aplicado.");
+      finalista = (t1.getPokesal().getSpd() >= t2.getPokesal().getSpd()) ? t1 : t2;
+      System.out.printf(" %s avanca para a Grande Final pelo criterio de velocidade!%n",
+          finalista.getNome());
     }
+    System.out.println("====================================================");
 
-    t1.getPokesal().restaurarParaNovaBatalha();
-    t1.reiniciarParaNovaBatalha();
+    finalista.getPokesal().restaurarParaNovaBatalha();
+    finalista.reiniciarParaNovaBatalha();
 
     Treinador red = new Treinador("Red");
     simulador.adicionarTreinador(red);
@@ -123,28 +133,80 @@ public class Main {
     System.out.println("Arena da Final: " + terrenoFinal.getNome());
     descreverEfeitoTerreno(terrenoFinal);
     System.out.printf("Finalista 1: %s com seu companheiro %s (Item: %s)%n",
-        t1.getNome(), t1.getPokesal().getNome(),
-        t1.getPokesal().getHeldItem().getNome());
+        finalista.getNome(), finalista.getPokesal().getNome(),
+        finalista.getPokesal().getHeldItem().getNome());
     System.out.printf("Finalista 2 (Mestre): %s com %s (Item: %s)%n",
         red.getNome(), red.getPokesal().getNome(),
         red.getPokesal().getHeldItem().getNome());
 
-    Batalha batalhaFinal = simulador.iniciarBatalha(t1, red, terrenoFinal);
+    Batalha batalhaFinal = simulador.iniciarBatalha(finalista, red, terrenoFinal);
     System.out.println("\n--- INICIO DA GRANDE FINAL ---");
-    executarCicloBatalha(batalhaFinal, t1, red);
+    executarCicloBatalha(batalhaFinal, finalista, red);
 
     System.out.println("\n====================================================");
-    if (batalhaFinal.getVencedor() == t1) {
-      t1.incrementarBatalhasVencidas();
+    if (batalhaFinal.getVencedor() == finalista) {
+      finalista.incrementarBatalhasVencidas();
       System.out.printf(" PARABENS! %s (%s) FOI O CAMPEAO DO TORNEIO!%n",
-          t1.getNome(), t1.getPokesal().getNome());
+          finalista.getNome(), finalista.getPokesal().getNome());
     } else {
       String nomeVencedor = (batalhaFinal.getVencedor() != null)
           ? batalhaFinal.getVencedor().getNome() : "Nenhum (Empate)";
       System.out.printf(" %s FOI DERROTADO NA FINAL! O campeao foi %s!%n",
-          t1.getNome(), nomeVencedor);
+          finalista.getNome(), nomeVencedor);
     }
     System.out.println("====================================================");
+  }
+
+  /**
+   * Conduz a interacao no console para que o jogador escolha o Pokesal inicial.
+   *
+   * @param simulador instancia do servico de simulacao.
+   * @param treinador treinador que recebera a criatura escolhida.
+   * @param scanner leitor de fluxo de entrada.
+   */
+  private static void interagirEscolhaInicial(SimuladorDeBatalha simulador,
+                                              Treinador treinador,
+                                              Scanner scanner) {
+    System.out.printf("%n>>> Selecao de Pokesal Inicial para o Treinador: %s <<<%n",
+        treinador.getNome());
+    System.out.println("Opcoes homologadas no Estacionamento da UCSal:");
+    List<Pokesal> catalogo = SimuladorDeBatalha.obterCatalogoPokesal();
+    for (int i = 0; i < catalogo.size(); i++) {
+      Pokesal p = catalogo.get(i);
+      System.out.printf("  [%d] %-9s | Tipo: %-6s | HP: %3d | ATK: %2d | DEF: %2d | SPD: %2d%n",
+          i + 1, p.getNome(), p.getTipoElemental(), p.getHpMax(),
+          p.getAtk(), p.getDef(), p.getSpd());
+    }
+
+    boolean escolhido = false;
+    if (scanner != null) {
+      System.out.print("Digite o numero (1 a 6) ou nome do Pokesal desejado: ");
+      try {
+        if (scanner.hasNextLine()) {
+          String linha = scanner.nextLine().trim();
+          if (!linha.isEmpty()) {
+            try {
+              int opcao = Integer.parseInt(linha);
+              simulador.escolherPokesal(treinador, opcao);
+              escolhido = true;
+            } catch (NumberFormatException e) {
+              simulador.escolherPokesal(treinador, linha);
+              escolhido = true;
+            }
+          }
+        }
+      } catch (Exception e) {
+        System.out.println("Entrada nao reconhecida. Aplicando selecao padrao.");
+      }
+    }
+
+    if (!escolhido) {
+      System.out.println("Nenhuma entrada. Selecionando BulbaSal por padrao regulamentar.");
+      simulador.escolherPokesal(treinador, 1);
+    }
+
+    System.out.printf("-> %s escolheu com sucesso: %s!%n",
+        treinador.getNome(), treinador.getPokesal().getNome());
   }
 
   /**

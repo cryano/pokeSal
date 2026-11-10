@@ -1,6 +1,6 @@
 # PokéSal v2 - Sistema de Batalhas e Torneio Oficial UCSAL
 
-Projeto acadêmico em Java que implementa o simulador de batalhas Pokémon customizado (**PokéSal**), modelado segundo diagramas UML de Casos de Uso e Classes, com aderência rigorosa a todos os requisitos autorais, funcionais e não-funcionais (RA001–RA003, RF001–RF012, RNF001–RNF010).
+Projeto acadêmico em Java que implementa o simulador de batalhas Pokémon customizado (**PokeSal**).
 
 ---
 ## Apresentação de 10min em vídeo não-listado: 

@@ -1,0 +1,30 @@
+================================================================================
+REGISTRO HISTORICO DE PROMPTS UTILIZADOS COM GENAI (POKESAL)
+Conformidade: Politica Estrita de Uso de IA (Ate 10% - Revisao Ortografica e Sintaxe)
+================================================================================
+
+--------------------------------------------------------------------------------
+PROMPT #001 - FASE 01 (Revisao Ortografica e Gramatical)
+Data: 21/09/2026
+Modelo: Google Gemini
+Objetivo: Correcao ortografica de documentacao de software
+--------------------------------------------------------------------------------
+[PROMPT DO USUARIO]:
+"A partir deste momento você irá agir como um analista e orientador de software,
+para analisar alguns artefatos do nosso projeto, conforme o que foi pedido pelo professor Arthur
+Melo. Porém, existem pontos importantes: 1. Não nos ajudar em nada que o professor não
+permitiu. 2. Analisar apenas os artefatos anexados, omita qualquer informação/ajuda referente
+a codigo, pois, o mesmo já fizemos, baseando-se na documentação que levantamos. Arquivos
+anexados: 1. O que foi pedido pelo professor. 2. Nosso levantamento de requisitos (rascunho).
+3. Relatorio de ambiguidade e inspeção das regras de negocio. 4. E diagramas de caso de
+uso e de classe. Nesta altura de campeonato o que queremos é muito simples: 1. Identificação
+de erros ortograficos, apenas."
+
+[RESUMO DA RESPOSTA OBTIDA]:
+Identificacao de erros de concordancia adverbial em RF006 ("pouca efetiva" -> "pouco efetiva"),
+flexao verbal em RNF007 ("ter" -> "tiver") e concordancia em RNF010 ("Deve ser implementado" -> "Devem ser implementados").
+(Registro completo catalogado em docs/ia_declaration/ia_declaration_fase01.pdf).
+
+================================================================================
+FIM DO REGISTRO
+================================================================================

@@ -22,6 +22,7 @@ import br.com.pokesal.model.Treinador;
 import br.com.pokesal.service.Batalha;
 import br.com.pokesal.service.EfeitoDeStatusHeld;
 import br.com.pokesal.service.LimiteItensExcedidosException;
+import br.com.pokesal.service.SimuladorDeBatalha;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -457,5 +458,37 @@ public class PokeSalTest {
     portadorLeftovers.processarEfeitosFimDeTurno();
     assertEquals(76, portadorLeftovers.getHpAtual(),
         "O item segurado Restos do RU deve regenerar 6 HP ao processar fim de turno.");
+  }
+
+  /**
+   * Regra 1 de Negocio: Validacao da escolha explicita do Pokesal inicial pelo treinador.
+   */
+  @Test
+  @DisplayName("testEscolhaInicialTreinadorValidaEInvalida - Regra 1: Selecao formal do inicial")
+  public void testEscolhaInicialTreinadorValidaEInvalida() {
+    SimuladorDeBatalha simulador = new SimuladorDeBatalha();
+    Treinador treinador = new Treinador("Treinador Teste");
+
+    // 1. Escolha valida por nome
+    simulador.escolherPokesal(treinador, "CharSal");
+    assertEquals("CharSal", treinador.getPokesal().getNome());
+    assertEquals(TipoElemental.FOGO, treinador.getPokesal().getTipoElemental());
+    assertEquals(3, treinador.getMochila().size(),
+        "Ao escolher o inicial, a mochila deve ser abastecida com os 3 itens oficiais.");
+
+    // 2. Escolha valida por indice numerico (1 a 6)
+    simulador.escolherPokesal(treinador, 3); // 3 = SquirtSal
+    assertEquals("SquirtSal", treinador.getPokesal().getNome());
+    assertEquals(TipoElemental.AGUA, treinador.getPokesal().getTipoElemental());
+
+    // 3. Escolha com nome invalido deve disparar excecao
+    assertThrows(IllegalArgumentException.class, () -> {
+      simulador.escolherPokesal(treinador, "Pikachu");
+    }, "Deveria rejeitar criatura nao homologada como inicial.");
+
+    // 4. Escolha com indice fora da faixa deve disparar excecao
+    assertThrows(IllegalArgumentException.class, () -> {
+      simulador.escolherPokesal(treinador, 99);
+    }, "Deveria rejeitar indice fora do intervalo 1..6.");
   }
 }
